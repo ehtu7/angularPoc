@@ -1,0 +1,78 @@
+<div class='panle panel-primary'>
+        <div class="panel-heading">
+        {{pageTitle}}
+        </div>  
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2">Filter by:   </div>
+                <div class="col-md-4">
+                    <input type="text" [(ngModel)]="listFilter">
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6"> <h2>Filtered by:{{listFilter}}</h2> </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table" *ngIf='meals && meals.length'>
+                    <thead>
+                    <tr>
+                        <th>
+                            <button class="btn-primary"
+                                (click)="toggleImage()">
+                                {{showImage?"Hide":"show"}} Image
+
+                            </button>
+
+            </th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>DishType</th>
+                <th>category</th>
+                <th>price</th>
+                <th>Description</th>
+                <th>Ratings</th>
+                
+            
+        </tr>
+        </thead>
+        <tbody>
+            
+             <tr *ngFor = 'let meal of meals | mealFilter:listFilter'>
+             <td>
+            <img *ngIf = "showImage"
+            [src]="meal.imageUrl"
+            [style.width.px]="imageWidth"
+            [style.margin.px]='imageMargin'
+            title={{meal.mealName}} 
+            >   
+            </td>
+            <td>{{meal.mealCode}}</td>
+            <td>
+               <a [routerLink]="['/meal',meal.mealCode]">{{meal.mealName | lowercase}}</a>
+            </td>
+                 
+                
+                 <td>{{meal.mealType}}</td>
+                 <td>{{meal.mealCategory}}</td>
+                 <td>{{meal.mealPrice | currency : "INR": true:"1.2-2"}}</td>
+                 <td>{{meal.description | uppercase}} </td>
+                 <td>{{meal.mealRatings}}</td>
+                  <ai-star
+                     [rating]='meal.mealRatings'
+                     (ratingClicked) = 'onRatingClicked($event)'
+                 
+                    >
+                 </ai-star>
+
+             </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+</div>
+
+
+  
